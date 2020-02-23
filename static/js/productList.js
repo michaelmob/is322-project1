@@ -92,7 +92,6 @@ const productData = [
   },
 ];
 
-
 function Products($el, products) {
   const self = Object.create(Products);
 
@@ -121,7 +120,7 @@ function Products($el, products) {
   };
 
   self.render = (cb) => {
-    if (typeof cb !=' function')
+    if (typeof cb != 'function')
       cb = (x) => x;
 
     $el.innerHTML = '';
@@ -132,13 +131,86 @@ function Products($el, products) {
     });
   };
 
-  console.log($el)
+  self.orderByTitle = (order) => {
+    self.render((products) => {
+      const result = products.sort((a, b) => a.title.localeCompare(b.title));
+      return (order === 'desc') ? result.reverse() : result;
+    })
+  };
+
+  self.orderByPrice = (order) => {
+    self.render((products) => {
+      const result = products.sort((a, b) => a.price - b.price);
+      return (order === 'desc') ? result.reverse() : result;
+    })
+  };
+
+  self.setPriceRange = (min, max) => {
+    self.render((products) => {
+      return products.filter((product) => {
+        return product.price >= min && product.price <= max
+      });
+    });
+  };
+
+  self.setCategory = (category) => {
+    self.render((products) => {
+      return products.filter((product) => {
+        return product.categories.includes(category)
+      });
+    });
+  };
 
   return self;
 };
 
 
 document.addEventListener('DOMContentLoaded', function(event) { 
+  const byColumn = (field) => (a, b) => a[field] > b[field];
   const products = new Products(document.querySelector('.cards'), productData);
-  products.render();
+  products.render((products) => products.sort(byColumn('title')));
+
+
+  const $orderBy = document.querySelector("[name='order_by']");
+  const $priceRange = document.querySelector("[name='price_range']");
+  const $category = document.querySelector("[name='category']");
+
+  $orderBy.addEventListener('change', (event) => {
+    $priceRange.value = '';
+    $category.value = '';
+
+    switch(event.target.value) {
+      case 'desc_title': products.orderByTitle('desc'); break;
+      case 'asc_price':  products.orderByPrice('asc');  break;
+      case 'desc_price': products.orderByPrice('desc'); break;
+      default:           products.orderByTitle('asc');  break;
+    }
+  });
+
+  $priceRange.addEventListener('change', (event) => {
+    $orderBy.value = '';
+    $category.value = '';
+
+    switch(event.target.value) {
+      case '0_50':    products.setPriceRange(0, 50);    break;
+      case '50_100':  products.setPriceRange(50, 100);  break;
+      case '100_150': products.setPriceRange(100, 150); break;
+      case '150_200': products.setPriceRange(150, 200); break;
+      default:        products.orderByTitle('asc');     break;
+    }
+  });
+
+  $category.addEventListener('change', (event) => {
+    $orderBy.value = '';
+    $priceRange.value = '';
+
+    switch(event.target.value) {
+      case 'bird':    products.setCategory('bird');   break;
+      case 'small':   products.setCategory('small');  break;
+      case 'medium':  products.setCategory('medium'); break;
+      case 'big':     products.setCategory('big');    break;
+      default:        products.orderByTitle('asc');   break;
+    }
+  });
+
 });

@@ -1,4 +1,4 @@
-function Carousel($el) {
+function Carousel($el, cb=undefined) {
   const self = this;
   let interval = undefined;
 
@@ -17,15 +17,25 @@ function Carousel($el) {
     
     $images[activeIndex].classList.remove('active');
     $images[nextIndex].classList.add('active');
+
+    if (typeof cb == 'function')
+      cb();
   };
 
   self.next = () => self.relativeChange(1);
   self.start = (ms) => interval = setInterval(self.next, ms);
 
+  if (typeof cb == 'function')
+    cb();
+
   return self;
-}
+};
+
 
 document.addEventListener('DOMContentLoaded', function(event) { 
-  const carousel = new Carousel(document.querySelector('.carousel'));
-  carousel.start(10000);
+  const $alt = document.querySelector("#altText");
+  const carousel = new Carousel(document.querySelector('.carousel'), () => {
+    $alt.textContent = document.querySelector('.carousel .active').alt;
+  });
+  carousel.start(5000);
 });

@@ -13,9 +13,6 @@ main {
   margin: 0 auto;
 }
 
-/**
- * Navigation
- */
 nav {
   background: black;
   display: flex;
@@ -32,14 +29,17 @@ nav > a.logo {
   font-weight: bold;
 }
 
+footer {
+  background: black;
+  color: white;
+}
+
 /**
  * General
  */
 .collapsing {
   display: flex;
   justify-content: space-between;
-  background: black;
-  color: white;
 }
 
 .collapsing > ul {

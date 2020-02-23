@@ -107,7 +107,7 @@ function Products($el, products) {
     $title.className = 'title';
     $price.className = 'price';
     $image.className = 'image';
-    $image.src = `/static/images/${image}`;
+    $image.src = `static/images/${image}`;
     $title.textContent = title;
     $price.textContent = `$${price}`;
 

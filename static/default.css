@@ -20,3 +20,20 @@ main > nav {
 .title, .subtitle {
   margin: 0.25rem;
 }
+
+.carousel {
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel img {
+  height: 30rem;
+  display: none;
+}
+
+.carousel img.active {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}

@@ -1,39 +1,133 @@
 html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
   font-family: sans-serif;
 }
 
-body > main {
-  width: 600px;
-  text-align: center;
+main {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 1024px;
   margin: 0 auto;
-  border: 1px solid red;
 }
 
-main > nav {
+/**
+ * Navigation
+ */
+nav {
+  background: black;
   display: flex;
-  justify-content: space-around;
   width: 100%;
 }
 
-.title, .subtitle {
-  margin: 0.25rem;
+nav > a {
+  padding: 1rem;
+  color: white;
+  text-decoration: none;
 }
 
+nav > a.logo {
+  font-weight: bold;
+}
+
+/**
+ * General
+ */
+.collapsing {
+  display: flex;
+  justify-content: space-between;
+  background: black;
+  color: white;
+}
+
+.collapsing > ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.collapsing > * {
+  padding: 0.5rem !important;
+}
+
+/**
+ * Carousel
+ */
 .carousel {
   width: 100%;
   overflow: hidden;
+  background: #111;
 }
 
-.carousel img {
+.carousel > img {
   height: 30rem;
   display: none;
 }
 
-.carousel img.active {
+.carousel > img.active {
   display: block;
   margin-left: auto;
   margin-right: auto;
   display: block;
+}
+
+.banner {
+  position: relative;
+  text-align: right;
+  width: 100%;
+  color: white;
+  background: #111;
+}
+
+.banner > div {
+  display: block;
+  padding: 0.5rem;
+}
+
+/**
+ * Content
+ */
+.content {
+  padding: 0 1.5rem;
+}
+
+.cards {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  display: inline-block;
+  box-shadow: 0 0 0.5rem #000;
+  height: 18rem;
+  width: 18rem;
+  margin: 1rem;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.card-content .image {
+  background-color: black;
+  height: 15rem;
+  width: 100%;
+}
+
+.card-content .title {
+  margin: 1rem;
+}
+
+.card-content .price {
+  margin: 1rem;
 }
